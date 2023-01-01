@@ -10,14 +10,6 @@ load_dotenv()
 class NotificationManager:
     # This class is responsible for sending notifications with the deal flight details.
 
-    def get_emails(self):
-        emails = []
-        response = requests.get(os.getenv("SHEETY_USERS_URL"))
-        data = response.json()
-        for user in data["users"]:
-            emails.append(user["email"])
-        return emails
-
     def send_message(self, flight):
         client = Client(os.getenv("TWILIO_ACCOUNT_SID"),
                         os.getenv("TWILIO_AUTH_TOKEN"))
@@ -38,8 +30,7 @@ class NotificationManager:
         # print(new_message.status)
         # print(message)
 
-    def send_emails(self, flight):
-        emails = self.get_emails()
+    def send_emails(self, flight, emails):
         message = f"Low price alert! Only £{flight.price} to fly from {flight.departure_city}-{flight.departure_airport_code} to {flight.arival_city}-{flight.arival_airport_code} from, {flight.departure_time} to {flight.return_time}."
 
         if flight.stopovers:

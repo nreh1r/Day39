@@ -23,3 +23,11 @@ class DataManager:
         response = requests.put(
             url=f"{os.getenv('SHEETY_PUT_URL')}/{city['id']}", json=params)
         print(response.json())
+
+    def get_emails(self):
+        emails = []
+        response = requests.get(os.getenv("SHEETY_USERS_URL"))
+        data = response.json()
+        for user in data["users"]:
+            emails.append(user["email"])
+        return emails

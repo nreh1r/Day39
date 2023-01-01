@@ -20,8 +20,9 @@ for city in sheet_data:
     if price:
         # print(f"{city['city']}: £{price.price}")
         if price.price < city["lowestPrice"]:
+            emails = data_manager.get_emails()
             notification_manager.send_message(price)
-            notification_manager.send_emails(price)
+            notification_manager.send_emails(price, emails)
     else:
         print(f"No flights to {city['city']} found")
 
